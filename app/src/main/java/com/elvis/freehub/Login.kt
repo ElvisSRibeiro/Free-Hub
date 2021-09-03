@@ -24,7 +24,7 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class Login : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
+    //private lateinit var auth: FirebaseAuth
     private var mAuth= FirebaseAuth.getInstance()
 
     private var database=FirebaseDatabase.getInstance()
@@ -63,37 +63,32 @@ class Login : AppCompatActivity() {
 
 
     //tratamento da imagem antes de enviar para database
-    fun SaveImageInFirebase() {
-        val currentUser = mAuth!!.currentUser
+    fun SaveImageInFirebase(){
+        var currentUser =mAuth!!.currentUser
         val email:String=currentUser!!.email.toString()
         val storage=FirebaseStorage.getInstance()
-        val storageRef=storage.getReferenceFromUrl("gs://free-hub-8cac8.appspot.com")
+        val storgaRef=storage.getReferenceFromUrl("gs://free-hub-8cac8.appspot.com/")
         val df=SimpleDateFormat("ddMMyyHHmmss")
-        val dataObj=Date()
-        val imagePath= SplitString(email) + "." + df.format(dataObj)+ ".jpg"
-        val ImageRef=storageRef.child("images/" + imagePath)
+        val dataobj=Date()
+        val imagePath= SplitString(email) + "."+ df.format(dataobj)+ ".jpg"
+        val ImageRef=storgaRef.child("images/"+imagePath )
         ivImagePerson.isDrawingCacheEnabled=true
         ivImagePerson.buildDrawingCache()
 
         val drawable=ivImagePerson.drawable as BitmapDrawable
         val bitmap=drawable.bitmap
         val baos=ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos)
         val data= baos.toByteArray()
         val uploadTask=ImageRef.putBytes(data)
-
         uploadTask.addOnFailureListener{
-            Toast.makeText(applicationContext,"fail to upload", Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener {taskSnapshot->
+            Toast.makeText(applicationContext,"fail to upload",Toast.LENGTH_LONG).show()
+        }.addOnSuccessListener { taskSnapshot ->
 
-            var DownloadURL= taskSnapshot.storage.downloadUrl.toString()!!
+            var DownloadURL= taskSnapshot.storage.downloadUrl!!.toString()
 
-            if (currentUser != null) {
-                myRef.child("Users").child(currentUser.uid).child("email").setValue(currentUser.email)
-            }
-            if (currentUser != null) {
-                myRef.child("Users").child(currentUser.uid).child("ProfileImage").setValue(DownloadURL)
-            }
+            myRef.child("Users").child(currentUser.uid).child("email").setValue(currentUser.email)
+            myRef.child("Users").child(currentUser.uid).child("ProfileImage").setValue(DownloadURL)
             LoadTweets()
         }
 
@@ -109,12 +104,16 @@ class Login : AppCompatActivity() {
         LoadTweets()
 
     }
-    fun LoadTweets() {
-        var currentUser = mAuth.currentUser
 
-        if (currentUser!=null){
+    fun LoadTweets(){
+        var currentUser =mAuth!!.currentUser
+
+        if(currentUser!=null) {
+
+
             var intent = Intent(this, MainActivity::class.java)
-
+            intent.putExtra("email", currentUser.email)
+            intent.putExtra("uid", currentUser.uid)
 
             startActivity(intent)
         }
@@ -165,17 +164,18 @@ class Login : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode==PICK_IMAGE_CODE && data!=null && resultCode == RESULT_OK){
+        if(requestCode==PICK_IMAGE_CODE  && data!=null && resultCode == RESULT_OK){
+
             val selectedImage=data.data
-            val filePathColum=arrayOf(MediaStore.Images.Media.DATA)
-            val cursor=
-                selectedImage?.let { contentResolver.query(it, filePathColum, null, null, null ) }
-            cursor?.moveToFirst()
-            val columnIndex=cursor?.getColumnIndex(filePathColum[0])
-            val picturePath= columnIndex?.let { cursor?.getString(it) }
-            cursor?.close()
+            val filePathColum= arrayOf(MediaStore.Images.Media.DATA)
+            val cursor= contentResolver.query(selectedImage!!,filePathColum,null,null,null)
+            cursor!!.moveToFirst()
+            val coulomIndex=cursor!!.getColumnIndex(filePathColum[0])
+            val picturePath=cursor!!.getString(coulomIndex)
+            cursor!!.close()
             ivImagePerson.setImageBitmap(BitmapFactory.decodeFile(picturePath))
         }
+
     }
 
     fun buLogin(view: View){
