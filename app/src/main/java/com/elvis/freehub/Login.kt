@@ -14,13 +14,19 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_login.*
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @Suppress("DEPRECATION")
 class Login : AppCompatActivity() {
@@ -30,6 +36,8 @@ class Login : AppCompatActivity() {
     private var database=FirebaseDatabase.getInstance()
     private var myRef=database.reference
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -38,6 +46,8 @@ class Login : AppCompatActivity() {
         ivImagePerson.setOnClickListener(View.OnClickListener {
             checkPermission()
         })
+
+
     }
 
 
@@ -85,7 +95,7 @@ class Login : AppCompatActivity() {
             Toast.makeText(applicationContext,"fail to upload",Toast.LENGTH_LONG).show()
         }.addOnSuccessListener { taskSnapshot ->
 
-            var DownloadURL= taskSnapshot.storage.downloadUrl!!.toString()
+            var DownloadURL= taskSnapshot.storage.toString()
 
             myRef.child("Users").child(currentUser.uid).child("email").setValue(currentUser.email)
             myRef.child("Users").child(currentUser.uid).child("ProfileImage").setValue(DownloadURL)
@@ -98,6 +108,8 @@ class Login : AppCompatActivity() {
         val split=email.split("@")
         return split[0]
     }
+
+
 
     override fun onStart() {
         super.onStart()
