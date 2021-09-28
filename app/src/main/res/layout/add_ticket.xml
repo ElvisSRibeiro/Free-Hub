@@ -38,7 +38,7 @@
             android:layout_height="50pt"
             android:ems="10"
             android:focusableInTouchMode="true"
-            android:hint="O que que tá pegando?"
+            android:hint="Criar uma nova postagem"
             android:inputType="textMultiLine"
             android:selectAllOnFocus="false" />
 

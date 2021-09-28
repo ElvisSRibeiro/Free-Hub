@@ -13,11 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
     private var database= FirebaseDatabase.getInstance()
     private var myRef=database.reference
+    private lateinit var storageReference: StorageReference
+
+    
 
     var ListTweets=ArrayList<Ticket>()
     var adapter:MyTweetAdapter?=null
@@ -47,7 +48,10 @@ class MainActivity : AppCompatActivity() {
         myemail=b.getString("email")
         UserUID=b.getString("uid")
         //dummy data
-        ListTweets.add(Ticket("0","him","url","add"))
+        ListTweets.add(Ticket("0","him","add"))
+        //ListTweets.add(Ticket("0","texto","post1"))
+        //ListTweets.add(Ticket("0","texto","post2"))
+        //ListTweets.add(Ticket("0","texto","post3"))
 
 
         adapter= MyTweetAdapter(this,ListTweets)
@@ -89,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 var myView=layoutInflater.inflate(R.layout.tweets_ticket,null)
                 myView.txt_tweet.setText(mytweet.tweetText)
                 myView.txtUserName.setText(mytweet.tweetPersonUID)
-                Picasso.get().load(mytweet.tweetImageURL).into(myView.tweet_picture);
+                Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/free-hub-8cac8.appspot.com/o/imagePost%2Frgdvhjt.230921152427.jpg?alt=media&token=77373bdb-f8c5-45a6-9854-f61d86e4a2df").into(myView.tweet_picture);
 
                 return myView
             }
@@ -137,8 +141,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     var DownloadURL:String?=""
+    //-----------------------------------//
+    //aqui que vai entrar o modo de enviar a imagem para o storage!!!!!!!!!!!!!
+    //fun uploadPostPic() {
+       // storageReference = FirebaseStorage.getInstance().getReference("imagePost/"+)
+    //}
     fun UploadImage(bitmap:Bitmap) {
-        ListTweets.add(0,Ticket("0","him","url","loading"))
+        ListTweets.add(0,Ticket("0","him","loading"))
         adapter!!.notifyDataSetChanged()
 
         val storage= FirebaseStorage.getInstance()
@@ -174,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                         try {
 
                             ListTweets.clear()
-                            ListTweets.add(Ticket("0","him","url","add"))
+                            ListTweets.add(Ticket("0","him","add"))
 
                             var td = dataSnapshot!!.value as HashMap<String, Any>
 
@@ -184,7 +193,7 @@ class MainActivity : AppCompatActivity() {
 
                                 ListTweets.add(Ticket(key,
                                         post["text"] as String,
-                                        post["postImageURL"] as String,
+                                        //post["postImageURL"] as String,
                                         post["userUID"] as String))
 
 

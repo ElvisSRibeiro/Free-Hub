@@ -54,13 +54,18 @@ class Login : AppCompatActivity() {
     fun LoginToFireBase(email:String,password:String){
 
         mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this){ task ->
+                .addOnCompleteListener(this){ createUsertask ->
 
-                if (task.isSuccessful){
+                if (createUsertask.isSuccessful){
+                    var currentUser =mAuth!!.currentUser
+
+                    if (currentUser != null) {
+                        myRef.child("Users").child(currentUser.uid).child("email").setValue(currentUser.email)
+                    }
                     Toast.makeText(applicationContext,"Successful login",Toast.LENGTH_LONG).show()
 
-
-                    SaveImageInFirebase()
+                    LoadTweets()
+                    //SaveImageInFirebase()
 
 
                 }else {
@@ -117,6 +122,7 @@ class Login : AppCompatActivity() {
 
     }
 
+    //Direciona para mainActivity
     fun LoadTweets(){
         var currentUser =mAuth!!.currentUser
 
@@ -192,5 +198,7 @@ class Login : AppCompatActivity() {
 
     fun buLogin(view: View){
         LoginToFireBase(etEmail.text.toString(), etPassword.text.toString())
+
+
     }
 }

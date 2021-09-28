@@ -12,12 +12,13 @@
         android:layout_width="320dp"
         android:layout_height="45dp"
 
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="128dp"
         android:background="#C4EAEAEA"
         android:ems="10"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +26,7 @@
         android:id="@+id/etPassword"
         android:layout_width="231dp"
         android:layout_height="43dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         android:background="#B4E1E1E1"
         android:ems="10"
         android:hint="Senha"
@@ -38,7 +39,7 @@
         android:id="@+id/ivImagePerson"
         android:layout_width="155dp"
         android:layout_height="155dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
@@ -56,4 +57,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivImagePerson"
         app:layout_constraintVertical_bias="0.203" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
