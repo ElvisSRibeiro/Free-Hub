@@ -3,14 +3,16 @@ package com.elvis.freehub
 class Ticket{
     var tweetID:String?=null
     var tweetText:String?=null
-    //var tweetImageURL:String?=null
+    var tweetImageURL:String?=null
     var tweetPersonUID:String?=null
+    //var tweetDateCreation:String?=null
 
-    constructor(tweetID:String,tweetText:String,tweetPersonUID:String){
+    constructor(tweetID:String,tweetText:String,tweetImageURL:String,tweetPersonUID:String){
         this.tweetID=tweetID
         this.tweetText=tweetText
-        //this.tweetImageURL=tweetImageURL
+        this.tweetImageURL=tweetImageURL
         this.tweetPersonUID=tweetPersonUID
+        //this.tweetDateCreation=tweetDateCreation
     }
 }
 

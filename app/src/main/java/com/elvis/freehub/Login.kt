@@ -65,7 +65,7 @@ class Login : AppCompatActivity() {
                     Toast.makeText(applicationContext,"Successful login",Toast.LENGTH_LONG).show()
 
                     LoadTweets()
-                    //SaveImageInFirebase()
+                    SaveImageInFirebase()
 
 
                 }else {
@@ -99,11 +99,11 @@ class Login : AppCompatActivity() {
         uploadTask.addOnFailureListener{
             Toast.makeText(applicationContext,"fail to upload",Toast.LENGTH_LONG).show()
         }.addOnSuccessListener { taskSnapshot ->
-
-            var DownloadURL= taskSnapshot.storage.toString()
-
-            myRef.child("Users").child(currentUser.uid).child("email").setValue(currentUser.email)
-            myRef.child("Users").child(currentUser.uid).child("ProfileImage").setValue(DownloadURL)
+            taskSnapshot.storage.downloadUrl.addOnCompleteListener {
+                var DownloadURL= it.result.toString()
+                myRef.child("Users").child(currentUser.uid).child("email").setValue(currentUser.email)
+                myRef.child("Users").child(currentUser.uid).child("ProfileImage").setValue(DownloadURL)
+            }
             LoadTweets()
         }
 
