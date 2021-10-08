@@ -49,7 +49,7 @@
             android:paddingRight="3dp"
             android:paddingTop="3dp"
             android:paddingBottom="5dp"
-            android:layoutDirection="ltr"
+            android:layoutDirection="rtl"
             android:orientation="horizontal"
             android:background="@drawable/background"
             android:layout_width="match_parent"
