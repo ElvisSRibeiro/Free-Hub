@@ -79,11 +79,10 @@ class MainActivity : AppCompatActivity() {
                 var myView=layoutInflater.inflate(R.layout.add_ticket,null)
                 myView.iv_attach.setOnClickListener( View.OnClickListener {
                 loadImage()
-
                 })
                 myView.iv_post.setOnClickListener(View.OnClickListener {
                     //Upload to the server
-                    if(myView.etPost.text!= null){
+                    if(myView.etPost.text.length>0 ){
                         //val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
                         //val currentDate = sdf.format(Date())
 
@@ -91,9 +90,10 @@ class MainActivity : AppCompatActivity() {
                                 PostInfo(myemail?.let { it1 -> SplitString(it1) }!!,
                                         myView.etPost.text.toString(),
                                         DownloadURL!!
-
                                 ))
                         myView.etPost.setText("")
+                    }else{
+                        Toast.makeText(applicationContext,"Por favor adicione um texto", Toast.LENGTH_LONG).show()
                     }
 
                 })
