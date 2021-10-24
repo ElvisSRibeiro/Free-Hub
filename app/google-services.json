@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "513395076917",
+    "project_id": "free-hub-8cac8",
+    "storage_bucket": "free-hub-8cac8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513395076917:android:120646b98bff2ee8b8e67c",
+        "android_client_info": {
+          "package_name": "com.elvis.freehub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513395076917-m1auqp9o4j2dascn876doiqhg95k976k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdF0lnP-TD5BOZlg9axR5CjQTykwnwGpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513395076917-m1auqp9o4j2dascn876doiqhg95k976k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
