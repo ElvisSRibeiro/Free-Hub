@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
     private var myRef=database.reference
     private lateinit var storageReference: StorageReference
 
-    
-
     var ListTweets=ArrayList<Ticket>()
     var adapter:MyTweetAdapter?=null
     var myemail:String?=null
